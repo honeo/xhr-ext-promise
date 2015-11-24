@@ -1,11 +1,8 @@
 {
   "name": "xhr-ext-promise",
-  "version": "1.0.0",
-  "description": "Promiseを返すよくあるXHRラッパー。",
+  "version": "1.0.1",
+  "description": "Promiseを返すよくあるXHRラッパー",
   "main": "index.js",
-  "scripts": {
-    "test": "babel-node test.js"
-  },
   "keywords": [
     "xhr",
     "promise",

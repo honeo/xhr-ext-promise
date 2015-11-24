@@ -1,0 +1,16 @@
+{
+  "name": "xhr-ext-promise",
+  "version": "1.0.0",
+  "description": "Promiseを返すよくあるXHRラッパー。",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "xhr",
+    "promise",
+    "wrapper"
+  ],
+  "author": "honeo",
+  "license": "MIT"
+}

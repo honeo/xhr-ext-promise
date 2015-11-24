@@ -9,5 +9,9 @@
     "wrapper"
   ],
   "author": "honeo",
-  "license": "MIT"
+  "license": "MIT",
+  "repository" : {
+      "type": "git",
+      "url": "https://github.com/honeo/xhr-ext-promise.git"
+  }
 }

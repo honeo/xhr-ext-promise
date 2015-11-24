@@ -37,7 +37,7 @@ XEP.method({
 
 Properties
 ---
-**.interval_get, .interval_post**
+### .interval_get, .interval_post
 それぞれ前回get, postから次回までに空けるmsの標準値。
-**.timeout_get, timeout_post**
+### .timeout_get, timeout_post
 それぞれget, postに設定するタイムアウトの標準値。

@@ -130,7 +130,11 @@ function setOnProgress({
 	console.log('setOnProgress', xhr, callback);
 	typeof callback==='function' && xhr.addEventListener('progress', (e)=>{
 		console.log('onprogress', e);
-		e.lengthComputable && callback.call(xhr, e.loaded/e.total*100|0 );
+		e.lengthComputable && callback.call(xhr, {
+			target: xhr,
+			timestamp: Date.now(),
+			status: e.loaded/e.total*100|0
+		});
 	}, false);
 }
 

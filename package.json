@@ -4,7 +4,7 @@
   "description": "Promiseを返すよくあるXHRラッパー。",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "babel-node test.js"
   },
   "keywords": [
     "xhr",

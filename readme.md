@@ -1,7 +1,9 @@
 なにこれ
 ---
 よくあるPromise対応のXHRラッパー。  
-今んとこGet, Postのみ。
+ブラウザ用、今んとこGetとPostのみ。  
+[honeo/xhr-ext-promise](https://github.com/honeo/xhr-ext-promise)  
+[xhr-ext-promise](https://www.npmjs.com/package/xhr-ext-promise)
 
 使い方
 ---
@@ -10,7 +12,10 @@ $ npm i xhr-ext-promise
 ```
 ```js
 const XEP = require('xhr-ext-promise');
-XEP.method({...});
+XEP.method({...}).then( (doc)=>{
+	console.log(doc); // HTMLDocumentElement
+});
+
 ```
 Method
 ---

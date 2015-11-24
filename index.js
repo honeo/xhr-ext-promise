@@ -143,7 +143,7 @@ function setOnProgress({
 	引数.urlのページをdocumentで取得する
 */
 XHP.getDocument = function({
-	url, onprogress, method='get', user='', password='', send=null, timeout=XHP.timeout_get, interval=interval_get
+	url, onprogress, method='get', user='', password='', send=null, timeout=XHP.timeout_get, interval=XHP.interval_get
 }){
 	console.log('getDocument', arguments);
 	return new Promise( (resolve, reject)=>{
@@ -155,16 +155,12 @@ XHP.getDocument = function({
 		xhr.open(method, url, true, user, password);
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
-				const doc_result = do{
-					if( hasResponseTypeDocument() ){
-						xhr.response;
-					}else{
-						stringToDocument({
-							responseText: xhr.responseText,
-							url
-						});
-					}
-				}
+				const doc_result = hasResponseTypeDocument() ?
+					xhr.response:
+					stringToDocument({
+						responseText: xhr.responseText,
+						url
+					});
 				console.log('getDocument', 'resolve', doc_result);
 				resolve(doc_result);
 			}
@@ -191,7 +187,7 @@ XHP.getDocument = function({
 		const promise = formToDocument({form: formElement});
 */
 XHP.formToDocument = function({
-	form, onprogress, method='post', user='', password='', timeout=XHP.timeout_post, interval=interval_post
+	form, onprogress, method='post', user='', password='', timeout=XHP.timeout_post, interval=XHP.interval_post
 }){
 	console.log('formToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
@@ -203,16 +199,12 @@ XHP.formToDocument = function({
 		xhr.open(method, form.action, true, user, password);
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
-				const doc_result = do{
-					if( hasResponseTypeDocument() ){
-						xhr.response;
-					}else{
-						stringToDocument({
-							responseText: xhr.responseText,
-							url: form.action
-						});
-					}
-				}
+				const doc_result = hasResponseTypeDocument() ?
+					xhr.response:
+					stringToDocument({
+						responseText: xhr.responseText,
+						url: form.action
+					});
 				console.log('formToDocument', 'resolve', doc_result);
 				resolve(doc_result);
 			}
@@ -237,7 +229,7 @@ XHP.formToDocument = function({
 	postの返り値をdocumentとして取得する
 */
 XHP.postToDocument = function({
-	action, onprogress, method='post', user='', password='', send=null, timeout=XHP.timeout_post, interval=interval_post
+	action, onprogress, method='post', user='', password='', send=null, timeout=XHP.timeout_post, interval=XHP.interval_post
 }){
 	console.log('postToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
@@ -250,16 +242,12 @@ XHP.postToDocument = function({
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
-				const doc_result = do{
-					if( hasResponseTypeDocument() ){
-						xhr.response;
-					}else{
-						stringToDocument({
-							responseText: xhr.responseText,
-							url: action
-						});
-					}
-				}
+				const doc_result = hasResponseTypeDocument() ?
+					xhr.response:
+					stringToDocument({
+						responseText: xhr.responseText,
+						url: action
+					});
 				console.log('postToDocument', 'resolve', doc_result);
 				resolve(doc_result);
 			}

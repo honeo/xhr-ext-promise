@@ -5,24 +5,28 @@ const console = {
 }
 
 /*
-	delay_method: 同method同士のインターバルms
+	interval_method: 同method同士のインターバルms
 		interval_post:300 なら2回目のPostは1回目から300ms空ける
+		送信―受信中に他のXHRが行われる可能性は考慮してない
+		intervalを使う場合はこのモジュールを扱う部分でスタック化するなりして同期的に処理するべし
 	timeout_method: rejectするms、0で無効
 */
 const XHP = {
 	interval_get: 0,
 	interval_post: 0,
 	timeout_get: 0,
-	timeout_post: 0,
+	timeout_post: 0
 }
 
 /*
 	前回の送受信完了時間メモ
-		.method: Date.now()返り値; で保存する。
-		.set('ｍethod');
+		.method: Date.now()返り値;
 */
 const previousTime = {
-	// 前回送信時間メモ
+	/*
+		前回送信時間メモ
+		.set('ｍethod');
+	*/
 	set(method){
 		const time = Date.now();
 		console.log('previousTime.set', method, time);
@@ -40,7 +44,7 @@ function getSendIntervalTime({method, interval}){
 	const previous = previousTime[method];
 	const result = (function(){
 		if( previous ){
-			const delay = interval || XHP[`delay_${method}`] || 0;
+			const delay = interval || XHP[`interval_${method}`] || 0;
 			const line = delay + previous;
 			return line < now ?
 				0:

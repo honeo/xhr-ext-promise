@@ -1,3 +1,5 @@
+'use strict';
+
 const console = {
 	log(){}
 }
@@ -15,18 +17,16 @@ const XHP = {
 }
 
 /*
-	前回送受信時間メモ
-		現在は送信だけ
-		.type_method: Date.now()返り値; で保存される。
-		.set({type:'send', method:'get'});
+	前回の送受信完了時間メモ
+		.method: Date.now()返り値; で保存する。
+		.set('ｍethod');
 */
 const previousTime = {
 	// 前回送信時間メモ
-	set({type, method}){
-		const target = `${type}_${method}`;
+	set(method){
 		const time = Date.now();
-		console.log('previousTime.set', target, time);
-		this[target] = time;
+		console.log('previousTime.set', method, time);
+		this[method] = time;
 	}
 }
 
@@ -37,7 +37,7 @@ const previousTime = {
 */
 function getSendIntervalTime({method, interval}){
 	const now = Date.now();
-	const previous = previousTime[`send_${method}`];
+	const previous = previousTime[method];
 	const result = (function(){
 		if( previous ){
 			const delay = interval || XHP[`delay_${method}`] || 0;
@@ -155,6 +155,7 @@ XHP.getDocument = function({
 		xhr.open(method, url, true, user, password);
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
+				previousTime.set(method);
 				const doc_result = hasResponseTypeDocument() ?
 					xhr.response:
 					stringToDocument({
@@ -167,6 +168,7 @@ XHP.getDocument = function({
 		}
 		xhr.onerror = (e)=>{
 			console.log('getDocument', 'reject', e);
+			previousTime.set(method);
 			reject(e);
 		}
 		// progressEvent
@@ -175,7 +177,6 @@ XHP.getDocument = function({
 			callback: onprogress
 		});
 		setTimeout( ()=>{
-			previousTime.set({type:'send', method});
 			xhr.send(send);
 		}, getSendIntervalTime({method, interval}) );
 	});
@@ -199,6 +200,7 @@ XHP.formToDocument = function({
 		xhr.open(method, form.action, true, user, password);
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
+				previousTime.set(method);
 				const doc_result = hasResponseTypeDocument() ?
 					xhr.response:
 					stringToDocument({
@@ -211,6 +213,7 @@ XHP.formToDocument = function({
 		}
 		xhr.onerror = (e)=>{
 			console.log('formToDocument', 'reject', e);
+			previousTime.set(method);
 			reject(e);
 		}
 		// progressEvent
@@ -219,7 +222,6 @@ XHP.formToDocument = function({
 			callback: onprogress
 		});
 		setTimeout( ()=>{
-			previousTime.set({type:'send', method});
 			xhr.send( new FormData(form) );
 		}, getSendIntervalTime({method, interval}) );
 	});
@@ -242,6 +244,7 @@ XHP.postToDocument = function({
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.onreadystatechange = ()=>{
 			if(xhr.readyState===4 && xhr.status===200){
+				previousTime.set(method);
 				const doc_result = hasResponseTypeDocument() ?
 					xhr.response:
 					stringToDocument({
@@ -254,6 +257,7 @@ XHP.postToDocument = function({
 		}
 		xhr.onerror = (e)=>{
 			console.log('postToDocument', 'reject', e);
+			previousTime.set(method);
 			reject(e);
 		}
 		// progressEvent
@@ -262,7 +266,6 @@ XHP.postToDocument = function({
 			callback: onprogress
 		});
 		setTimeout( ()=>{
-			previousTime.set({type:'send', method});
 			xhr.send( send );
 		}, getSendIntervalTime({method, interval}) );
 	});

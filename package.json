@@ -1,6 +1,6 @@
 {
   "name": "xhr-ext-promise",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Promiseを返すよくあるXHRラッパー",
   "main": "index.js",
   "keywords": [
@@ -10,8 +10,15 @@
   ],
   "author": "honeo",
   "license": "MIT",
-  "repository" : {
-      "type": "git",
-      "url": "https://github.com/honeo/xhr-ext-promise.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honeo/xhr-ext-promise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/honeo/xhr-ext-promise/issues"
+  },
+  "homepage": "https://github.com/honeo/xhr-ext-promise#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

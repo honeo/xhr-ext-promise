@@ -1,5 +1,3 @@
-'use strict';
-
 const console = {
 	log(){}
 }
@@ -276,4 +274,4 @@ XHP.postToDocument = function({
 }
 
 
-export default XHP;
+module.exports = XHP;

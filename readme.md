@@ -1,12 +1,10 @@
-なにこれ
----
+## なにこれ
 よくあるPromise対応のXHRラッパー。  
 ブラウザ用、今んとこGetとPostのみ。  
 [honeo/xhr-ext-promise](https://github.com/honeo/xhr-ext-promise)  
 [xhr-ext-promise](https://www.npmjs.com/package/xhr-ext-promise)
 
-使い方
----
+## 使い方
 ```sh
 $ npm i xhr-ext-promise
 ```
@@ -15,10 +13,9 @@ const XEP = require('xhr-ext-promise');
 XEP.method({...}).then( (doc)=>{
 	console.log(doc); // HTMLDocumentElement
 });
-
 ```
-Method
----
+
+## Method
 全てPromiseインスタンスを返して、取得したdocumentを引数にresolve()する。  
 取得したdocumentに　body, head, domain, URL プロパティがない場合は付与する。
 ```js
@@ -40,8 +37,7 @@ XEP.method({
 });
 ```
 
-Properties
----
+## Properties
 ### .interval_get, .interval_post
 それぞれ前回get, postから次回までに空けるmsの標準値。
 ### .timeout_get, timeout_post

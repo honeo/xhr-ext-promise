@@ -59,6 +59,7 @@ function getSendIntervalTime({method, interval}){
 	XHR.responseType='document'のサポート有無
 	[XMLHttpRequest の HTML パース処理 | MDN](https://developer.mozilla.org/ja/docs/HTML_in_XMLHttpRequest)
 		の結果をキャッシュするようにしたやつ
+	モダンブラウザだとコンソールに同期は廃止しますた的なWarningが出る
 */
 const hasResponseTypeDocument = (function(){
 	let result;
@@ -145,12 +146,13 @@ function setOnProgress({
 	引数.urlのページをdocumentで取得する
 */
 XHP.getDocument = function({
-	url, onprogress, method='get', user='', password='', send=null, timeout=XHP.timeout_get, interval=XHP.interval_get
+	url, onprogress, withCredentials=false, method='get', user='', password='', send=null, timeout=XHP.timeout_get, interval=XHP.interval_get
 }){
 	console.log('getDocument', arguments);
 	return new Promise( (resolve, reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
+		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}
@@ -190,12 +192,13 @@ XHP.getDocument = function({
 		const promise = formToDocument({form: formElement});
 */
 XHP.formToDocument = function({
-	form, onprogress, method='post', user='', password='', timeout=XHP.timeout_post, interval=XHP.interval_post
+	form, onprogress, withCredentials=false, method='post', user='', password='', timeout=XHP.timeout_post, interval=XHP.interval_post
 }){
 	console.log('formToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
+		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}
@@ -233,12 +236,13 @@ XHP.formToDocument = function({
 	postの返り値をdocumentとして取得する
 */
 XHP.postToDocument = function({
-	action, onprogress, method='post', user='', password='', send=null, timeout=XHP.timeout_post, interval=XHP.interval_post
+	action, onprogress, withCredentials=false, method='post', user='', password='', send=null, timeout=XHP.timeout_post, interval=XHP.interval_post
 }){
 	console.log('postToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
+		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}

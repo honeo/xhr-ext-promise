@@ -1,8 +1,10 @@
-## なにこれ
-よくあるPromise対応のXHRラッパー。  
-ブラウザ用、今んとこGetとPostのみ。  
+# xhr-ext-promise
 [honeo/xhr-ext-promise](https://github.com/honeo/xhr-ext-promise)  
 [xhr-ext-promise](https://www.npmjs.com/package/xhr-ext-promise)
+
+## なにこれ
+よくあるPromise対応のXHRラッパー。  
+ブラウザ用、今んとこGetとPostのみ。
 
 ## 使い方
 ```sh
@@ -11,7 +13,7 @@ $ npm i xhr-ext-promise
 ```js
 const XEP = require('xhr-ext-promise');
 XEP.method({...}).then( (doc)=>{
-	console.log(doc); // HTMLDocumentElement
+	console.log(doc); // document
 });
 ```
 
@@ -33,7 +35,8 @@ XEP.method({
 	password: string, 	// default=''
 	timeout: 0, 		// default=XEP.timeout_method
 	interval: 0, 		// default=XEP.interval_method
-	send: 'hoge=fuga&sega=newhard' // default=null
+	send: 'hoge=fuga&sega=newhard', // default=null
+	withCredentials: boolean //default=false
 });
 ```
 

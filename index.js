@@ -157,18 +157,16 @@ XHP.getDocument = function({
 			xhr.responseType = 'document';
 		}
 		xhr.open(method, url, true, user, password);
-		xhr.onreadystatechange = ()=>{
-			if(xhr.readyState===4 && xhr.status===200){
-				previousTime.set(method);
-				const doc_result = hasResponseTypeDocument() ?
-					xhr.response:
-					stringToDocument({
-						responseText: xhr.responseText,
-						url
-					});
-				console.log('getDocument', 'resolve', doc_result);
-				resolve(doc_result);
-			}
+		xhr.onload = ()=>{
+			previousTime.set(method);
+			const doc_result = hasResponseTypeDocument() ?
+				xhr.response:
+				stringToDocument({
+					responseText: xhr.responseText,
+					url
+				});
+			console.log('getDocument', 'resolve', doc_result);
+			resolve(doc_result);
 		}
 		xhr.onerror = (e)=>{
 			console.log('getDocument', 'reject', e);
@@ -203,18 +201,16 @@ XHP.formToDocument = function({
 			xhr.responseType = 'document';
 		}
 		xhr.open(method, form.action, true, user, password);
-		xhr.onreadystatechange = ()=>{
-			if(xhr.readyState===4 && xhr.status===200){
-				previousTime.set(method);
-				const doc_result = hasResponseTypeDocument() ?
-					xhr.response:
-					stringToDocument({
-						responseText: xhr.responseText,
-						url: form.action
-					});
-				console.log('formToDocument', 'resolve', doc_result);
-				resolve(doc_result);
-			}
+		xhr.onload = ()=>{
+			previousTime.set(method);
+			const doc_result = hasResponseTypeDocument() ?
+				xhr.response:
+				stringToDocument({
+					responseText: xhr.responseText,
+					url: form.action
+				});
+			console.log('formToDocument', 'resolve', doc_result);
+			resolve(doc_result);
 		}
 		xhr.onerror = (e)=>{
 			console.log('formToDocument', 'reject', e);
@@ -248,18 +244,16 @@ XHP.postToDocument = function({
 		}
 		xhr.open(method, action, true, user, password);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xhr.onreadystatechange = ()=>{
-			if(xhr.readyState===4 && xhr.status===200){
-				previousTime.set(method);
-				const doc_result = hasResponseTypeDocument() ?
-					xhr.response:
-					stringToDocument({
-						responseText: xhr.responseText,
-						url: action
-					});
-				console.log('postToDocument', 'resolve', doc_result);
-				resolve(doc_result);
-			}
+		xhr.onload = ()=>{
+			previousTime.set(method);
+			const doc_result = hasResponseTypeDocument() ?
+				xhr.response:
+				stringToDocument({
+					responseText: xhr.responseText,
+					url: action
+				});
+			console.log('postToDocument', 'resolve', doc_result);
+			resolve(doc_result);
 		}
 		xhr.onerror = (e)=>{
 			console.log('postToDocument', 'reject', e);
@@ -276,6 +270,5 @@ XHP.postToDocument = function({
 		}, getSendIntervalTime({method, interval}) );
 	});
 }
-
 
 module.exports = XHP;

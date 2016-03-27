@@ -1,6 +1,6 @@
 {
   "name": "xhr-ext-promise",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Promiseを返すXHRラッパー",
   "main": "index.js",
   "keywords": [

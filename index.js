@@ -9,7 +9,7 @@ const console = {
 		intervalを使う場合はこのモジュールを扱う部分でスタック化するなりして同期的に処理するべし
 	timeout_method: rejectするms、0で無効
 */
-const XHP = {
+const XhrExtPromise = {
 	interval_get: 0,
 	interval_post: 0,
 	timeout_get: 0,
@@ -42,7 +42,7 @@ function getSendIntervalTime({method, interval}){
 	const previous = previousTime[method];
 	const result = (function(){
 		if( previous ){
-			const delay = interval || XHP[`interval_${method}`] || 0;
+			const delay = interval || XhrExtPromise[`interval_${method}`] || 0;
 			const line = delay + previous;
 			return line < now ?
 				0:
@@ -127,9 +127,7 @@ function stringToDocument({
 /*
 	progressイベント付けるやつ
 */
-function setOnProgress({
-	xhr, callback
-}){
+function setOnProgress({xhr, callback}){
 	console.log('setOnProgress', xhr, callback);
 	typeof callback==='function' && xhr.addEventListener('progress', (e)=>{
 		console.log('onprogress', e);
@@ -145,18 +143,18 @@ function setOnProgress({
 /*
 	引数.urlのページをdocumentで取得する
 */
-XHP.getDocument = function({
-	url, onprogress, withCredentials=false, method='get', user='', password='', send=null, timeout=XHP.timeout_get, interval=XHP.interval_get
+XhrExtPromise.getDocument = function({
+	url, onprogress, withCredentials=false, method='get', user='', password='', send=null, timeout=XhrExtPromise.timeout_get, interval=XhrExtPromise.interval_get
 }){
 	console.log('getDocument', arguments);
 	return new Promise( (resolve, reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
-		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}
 		xhr.open(method, url, true, user, password);
+		xhr.withCredentials = withCredentials;
 		xhr.onload = ()=>{
 			previousTime.set(method);
 			const doc_result = hasResponseTypeDocument() ?
@@ -189,18 +187,18 @@ XHP.getDocument = function({
 	例：
 		const promise = formToDocument({form: formElement});
 */
-XHP.formToDocument = function({
-	form, onprogress, withCredentials=false, method='post', user='', password='', timeout=XHP.timeout_post, interval=XHP.interval_post
+XhrExtPromise.formToDocument = function({
+	form, onprogress, withCredentials=false, method='post', user='', password='', timeout=XhrExtPromise.timeout_post, interval=XhrExtPromise.interval_post
 }){
 	console.log('formToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
-		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}
 		xhr.open(method, form.action, true, user, password);
+		xhr.withCredentials = withCredentials;
 		xhr.onload = ()=>{
 			previousTime.set(method);
 			const doc_result = hasResponseTypeDocument() ?
@@ -231,18 +229,18 @@ XHP.formToDocument = function({
 /*
 	postの返り値をdocumentとして取得する
 */
-XHP.postToDocument = function({
-	action, onprogress, withCredentials=false, method='post', user='', password='', send=null, timeout=XHP.timeout_post, interval=XHP.interval_post
+XhrExtPromise.postToDocument = function({
+	action, onprogress, withCredentials=false, method='post', user='', password='', send=null, timeout=XhrExtPromise.timeout_post, interval=XhrExtPromise.interval_post
 }){
 	console.log('postToDocument', arguments);
 	return new Promise( (resolve,reject)=>{
 		const xhr = new XMLHttpRequest();
 		xhr.timeout = timeout;
-		xhr.withCredentials = withCredentials;
 		if( hasResponseTypeDocument() ){
 			xhr.responseType = 'document';
 		}
 		xhr.open(method, action, true, user, password);
+		xhr.withCredentials = withCredentials;
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.onload = ()=>{
 			previousTime.set(method);
@@ -271,4 +269,4 @@ XHP.postToDocument = function({
 	});
 }
 
-module.exports = XHP;
+export default XhrExtPromise;
